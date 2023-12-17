@@ -62,13 +62,14 @@ const Calendar = () => {
     );
   };
 
+  const getCurrentMonth = () => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    return currentMonth >= startMonth ? currentMonth - startMonth : 12 + currentMonth - startMonth;
+  };
+
   const scrollRef = useRef(null);
   const [defaultMonth, setDefaultMonth] = useState(getCurrentMonth());
-
-  function getCurrentMonth() {
-    const currentDate = new Date();
-    return currentDate.getMonth() - startMonth;
-  }
 
   const handleScrollToMonth = (monthIndex) => {
     if (scrollRef.current) {
@@ -84,23 +85,23 @@ const Calendar = () => {
   }, [defaultMonth]);
 
   return (
-    <div style={{ width: '100%', display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <select onChange={(e) => handleScrollToMonth(parseInt(e.target.value))} value={defaultMonth}>
-        {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => {
-          const monthIndex = startMonth + index;
-          const monthName = new Date(year, monthIndex, 1).toLocaleString('en-US', { month: 'long' });
-          return <option key={index} value={index}>{`${monthName} ${year}`}</option>;
-        })}
-      </select>
-      <div ref={scrollRef} style={{ overflowY: 'auto', width: '100%', display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => (
-          <div key={index} style={{ marginBottom: '20px' }}>
-            <h2>{`${new Date(year, startMonth + index, 1).toLocaleString('en-US', { month: 'long' })} ${year}`}</h2>
-            {renderMonth(startMonth + index, year)}
-          </div>
-        ))}
-      </div>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <select onChange={(e) => setDefaultMonth(parseInt(e.target.value))} value={defaultMonth}>
+      {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => {
+        const monthIndex = startMonth + index;
+        const monthName = new Date(year, monthIndex, 1).toLocaleString('en-US', { month: 'long' });
+        return <option key={index} value={index}>{`${monthName} ${year}`}</option>;
+      })}
+    </select>
+    <div ref={scrollRef} style={{ overflowY: 'auto', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => (
+        <div key={index} style={{ marginBottom: '20px' }}>
+          <h2>{`${new Date(year, startMonth + index, 1).toLocaleString('en-US', { month: 'long' })} ${year}`}</h2>
+          {renderMonth(startMonth + index, year)}
+        </div>
+      ))}
     </div>
+  </div>
   );
 };
 
