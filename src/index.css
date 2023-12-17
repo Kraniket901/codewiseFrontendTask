@@ -26,6 +26,11 @@ td{
   padding: 20px;
   border: 1px solid rgba(0, 0, 0, 0.529);
   margin: 0;
+  cursor: pointer;
+}
+
+td:hover{
+  background-color: rgba(0, 115, 255, 0.145);
 }
 
 table{
@@ -40,4 +45,47 @@ select{
   border-bottom-right-radius: 15px;
   font-size: 17px;
   box-shadow: 0px 0px 5px black;
+}
+
+.modal{
+  padding: 2rem 3rem;
+  width: 50%;
+  background-color: #313538;
+  color: white;
+  border-radius: 20px;
+}
+
+button{
+  font-size: 10px;
+  padding: 1rem 2rem;
+  border-radius: 13px;
+  border: none;
+}
+
+li{
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+ol{
+  padding: 0;
+}
+
+/* Add these styles to your CSS */
+.custom-text-field .MuiOutlinedInput-root {
+  color: white;
+  & .MuiOutlinedInput-notchedOutline {
+    border-color: white;
+  }
+  &.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: white;
+  }
+}
+
+.custom-text-field .MuiInputLabel-root {
+  color: white;
+  &.Mui-focused {
+    color: white;
+  }
 }

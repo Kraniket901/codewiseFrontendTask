@@ -1,6 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
+import EventModal from './EventModal';
 
 const Calendar = () => {
+
+  const [events, setEvents] = useState([]);
+  const addEvent = (date, eventName) => {
+    const newEvent = { date, eventName };
+    setEvents([...events, newEvent]);
+  };
+  const [selectedDate, setSelectedDate] = useState(null);
+  const handleOpenModal = (date) => {
+    console.log('Opening modal for date:', date);
+    setSelectedDate(date);
+  };
+  const handleCloseModal = () => {
+    setSelectedDate(null);
+  };
+  const handleDeleteEvent = (eventToDelete) => {
+    setEvents(events.filter((event) => event !== eventToDelete));
+  };
+
   const startMonth = 5; // June is 5 in JavaScript Date object (0-indexed)
   const endMonth = 5 + 12;   // June is 5 in JavaScript Date object (0-indexed)
   const year = 2023;
@@ -48,16 +67,28 @@ const Calendar = () => {
           </tr>
         </thead>
         <tbody>
-          {weeksArray.map((week, weekIndex) => (
-            <tr key={weekIndex}>
-              {week.map(({ day, isToday }, dayIndex) => (
-                <td key={dayIndex} style={{ color: isToday ? 'blue' : 'black' }}>
-                  {day !== null ? day : ''}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        {weeksArray.map((week, weekIndex) => (
+          <tr key={weekIndex}>
+            {week.map(({ day, isToday }, dayIndex) => (
+              <td
+                key={dayIndex}
+                style={{ color: isToday ? 'blue' : 'black' }}
+                onClick={() => handleOpenModal(new Date(year, month, day))}
+              >
+                {day !== null ? (
+                  <>
+                    {day}
+                    {/* ... (existing code) */}
+                  </>
+                ) : (
+                  ''
+                )}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+
       </table>
     );
   };
@@ -94,12 +125,20 @@ const Calendar = () => {
       })}
     </select>
     <div ref={scrollRef} style={{ overflowY: 'auto', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => (
+    {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => (
         <div key={index} style={{ marginBottom: '20px' }}>
           <h2>{`${new Date(year, startMonth + index, 1).toLocaleString('en-US', { month: 'long' })} ${year}`}</h2>
-          {renderMonth(startMonth + index, year)}
+          {renderMonth(startMonth + index, year, handleOpenModal)}
         </div>
       ))}
+      <EventModal
+        isOpen={selectedDate !== null}
+        onClose={handleCloseModal}
+        date={selectedDate}
+        events={events}
+        addEvent={addEvent}
+        deleteEvent={handleDeleteEvent}
+      />
     </div>
   </div>
   );
