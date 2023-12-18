@@ -127,7 +127,7 @@ const Calendar = () => {
     <div ref={scrollRef} style={{ overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
     {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => (
         <div key={index} style={{ marginBottom: '20px' }}>
-          <h2>{`${new Date(year, startMonth + index, 1).toLocaleString('en-US', { month: 'long' })} ${year}`}</h2>
+          <h2>{`${new Date(year, startMonth + index, 1).toLocaleString('en-US', { month: 'long' })} ${year + Math.floor((startMonth + index) / 12)}`}</h2>
           {renderMonth(startMonth + index, year, handleOpenModal)}
         </div>
       ))}
