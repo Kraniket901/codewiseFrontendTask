@@ -116,7 +116,7 @@ const Calendar = () => {
   }, [defaultMonth]);
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
     <select onChange={(e) => setDefaultMonth(parseInt(e.target.value))} value={defaultMonth}>
       {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => {
         const monthIndex = startMonth + index;
@@ -124,7 +124,7 @@ const Calendar = () => {
         return <option key={index} value={index}>{`${monthName} ${year}`}</option>;
       })}
     </select>
-    <div ref={scrollRef} style={{ overflowY: 'auto', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div ref={scrollRef} style={{ overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
     {Array.from({ length: endMonth - startMonth + 1 }, (_, index) => (
         <div key={index} style={{ marginBottom: '20px' }}>
           <h2>{`${new Date(year, startMonth + index, 1).toLocaleString('en-US', { month: 'long' })} ${year}`}</h2>

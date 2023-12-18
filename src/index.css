@@ -29,12 +29,21 @@ td{
   cursor: pointer;
 }
 
+@media(width<600px){
+  table, thead, tbody{
+    width: auto;
+    font-size: 17px;
+  }
+  td{
+    padding: 5px;
+  }
+}
+
 td:hover{
   background-color: rgba(0, 115, 255, 0.145);
 }
 
 table{
-  width: 60%;
   margin: 100px 0;
 }
 
@@ -72,7 +81,7 @@ ol{
   padding: 0;
 }
 
-/* Add these styles to your CSS */
+
 .custom-text-field .MuiOutlinedInput-root {
   color: white;
   & .MuiOutlinedInput-notchedOutline {
